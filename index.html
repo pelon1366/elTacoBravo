@@ -6,7 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>El Taco Bravo LA </title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style> 
+    #pedido{
+        
+        width:50%; 
+        border:solid; 
+        margin:auto; 
+        padding: 8px; 
+        font-weight:bold;
+        background:yellowgreen;
+    }
+*{
+    margin:0px; padding:0px;
+}
+    #principal{
+        margin: 16px;
+        
 
+    }
+    #wellcome{
+        margin:auto; 
+        text-align: center;
+    }
+.grid_c{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-auto-rows: auto auto auto;
+}
+    body{
+
+        background:yellow;
+    }
+    #t {
+        width:50%; 
+        border:solid; 
+        margin:auto; 
+        padding: 8px; 
+        font-weight:bold;
+    }
+
+    </style>
 </head>
 <body>
     <!-- <nav class="navbar" style="background:#ff5733;color:white;">
@@ -14,23 +53,41 @@
      
         </h3>
     </nav> -->
-    <nav class="navbar" style="background:#ffc300;color:white;">
+    <nav id="id_nav" class="navbar" style="background:orange;color:white;">
         <h3>
         <img class="img-fluid" src="img2.jpeg" width="100px" height="100px"/>
         EL TACO BRAVO LA
     </h3>
     <!-- <div> -->
-        <button type="button" class="btn btn-primary">Historia</button>
-        <button type="button" class="btn btn-primary">Mision</button>
-        <button type="button" class="btn btn-primary">Vision</button>
-        <button type="button" class="btn btn-primary">objetivos</button>
-        <button type="button" class="btn btn-primary">Responsabilidad social</button>
+        <div>
+            <button type="button" onclick="hideShow()" class="btn btn-primary">A cerca de nosotros</button>
+
+            <button type="button" onclick="menu()" class="btn btn-primary">Menu</button>
+            <button type="button" onclick="galeria()" class="btn btn-primary">Galeria</button>
+
+        </div>
+        <div>
+            <button type="button" onclick="historia()" class="btn btn-primary ocultar">Historia</button>
+        
+        
+        <button type="button"onclick="mision()" class="btn btn-primary ocultar">Mision</button>
+        <button type="button" onclick="vision()" class="btn btn-primary ocultar">Vision</button>
+        <button type="button" onclick="objetivos()" class="btn btn-primary ocultar">objetivos</button>
+        </div>
 
         
         
     <!-- </div> -->
     </nav>
-    <div class="row">
+    <div id="principal">
+        <div id="wellcome"> 
+            <h1>Bienvenidos A Los Mejores Tacos de Los Angeles</h1>
+            <img class="img-fluid" src="IMG-20220921-WA0009.jpg" width="500px" height="500px">
+
+        </div>
+
+    </div>
+    <!-- <div class="row">
         <div class="col-4" style="background:orange;color:white;">
         <center>
             <h3> Menu y precios </h3>
@@ -88,7 +145,8 @@
 
    </div>   
         </div>
-    </div>
+    </div> -->
+    
     <footer style="background:#5b8721;padding-top:20px;padding-bottom:20px;"> 
         <center>
         <h4>
@@ -114,5 +172,88 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
+<script>
+    function cambiarColor(c){
+        $("#id_nav").css("background",c);
+
+    }
+    m = true;
+    function hideShow(){
+        if(m){
+            $(".ocultar").hide();
+            m = false; 
+            cambiarColor("lime");  
+        } else{
+            cambiarColor("#ffc300");
+            $(".ocultar").show();
+            m = true;
+        }
+    }
+    hideShow();
+    var menuPrecios= [
+        {name: "Tacos de Birria", price: "2.50"},
+        {name: "Tacos dorados", price: "3.00"},
+        {name: "Quezatacos", price: "4.00"},
+        {name: "Consome", price: "3.00"},
+        {name: "Vaso de Birria", price: "15.00"},
+        {name: "Sodas y Aguas", price: "1.50"},
+        {name: "Refrescos Mexicanos", price: "2.50"}
+      ];
+      var contador=0;
+      var total=0;
+    function menu(){
+        contador=0;
+        total=0;
+        $("#principal").html(" <table id='t'></table>"); 
+        $("#principal").append("<center> <h3>Pedidos agregados</h3></center> <table id='pedido'></table>"); 
+        $("#principal").append(" <div id='total'></div>"); 
+        $("#t").append('<tr><td>PRODUCTO</td><td>PRECIOS</td><td>AGREGAR</td></tr>');
+        $("#pedido").append('<tr><td>#</td><td>PRODUCTO</td><td>PRECIOS</td></tr>');
+            for(i=0; i<menuPrecios.length; i++){
+           
+                $("#t").append('<tr><td>'+menuPrecios[i].name+'</td><td>$ '+menuPrecios[i].price+'</td><td> <button type="button" onclick="add('+menuPrecios[i].price+',&apos;'+menuPrecios[i].name+'&apos;)" class="btn btn-primary">Agregar</button></td></tr>');
+
+            }
+    }
+
+function add(t,pro){
+      
+           
+         $("#pedido").append('<tr><td>'+contador+'</td><td>'+pro+'</td><td>$ '+t+'</td></tr>');
+         contador = contador+1; 
+    total=total+t;
+$("#total").html("<center><h3>TOTAL:$"+total+"</h3></center>");
+    }
+    
+function galeria(){
+        $("#principal").html('<div class="grid_c"><div>'
+        +'<img src="20220108_093611.jpg" width="300px" height="220px" alt=""></div><div>'
+        +'<img src="20210417_085107.jpg" width="300px" height="220px" alt=""></div><div>'
+        +'<img src="20210213_084710.jpg" width="300px" height="220px" alt=""></div><div>' 
+        +'<img src="20220108_101408.jpg" width="300px" height="220px" alt=""></div><div>'
+        +'<img src="IMG-20220921-WA0011.jpg" width="300px" height="220px" alt=""></div><div>' 
+        +'<img src="IMG-20220921-WA0009.jpg" width="300px" height="220px" alt=""></div><div>' 
+        +'<img src="IMG-20220824-WA0000.jpg" width="300px" height="220px" alt=""></div><div>' 
+        +'<img src="IMG-20220915-WA0014.jpg" width="300px" height="220px" alt=""></div><div>' 
+        +'<img src="IMG1.jpeg" width="300px" height="220px" alt=""></div></div>');
+    }
+function historia(){
+        $("#principal").html('<p> historia </p>');
+
+    }
+    function mision(){
+        $("#principal").html('<h2> mision </h2><p> Nuestra Mision es contribuir en la calidad de vida de nuestros clientes ofreciendo un producto 100% original, que aparte de satisfacer una necesidad bital tambien contribuya a su bienestar emocional dsisfrutando una comida familiar como en los pueblitos donde crecimos la mayoria. </p>');
+
+    }
+    function vision(){
+        $("#principal").html('<p> vision </p><p> </p>');
+
+    }
+    function objetivos(){
+        $("#principal").html('<p> objetivos </p>');
+
+    }
+
+</script>
 </body>
 </html>
